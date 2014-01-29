@@ -5,13 +5,7 @@
 // You need to get this from PEAR
 // http://pear.php.net/package/Crypt_HMAC
 
-if ( file_exists(dirname(__FILE__) . '/HMAC.php') )
-	## Use this line if you put the HMAC.php file in the same directory
-	require_once(dirname(__FILE__) . '/HMAC.php');
-else
-	## Use the following line if you keep HMAC.php in the PEAR repository.
-	require_once('Crypt/HMAC.php');
-
+require 'vendor/autoload.php';
 
 
 class SSLiveAPI {
@@ -28,11 +22,6 @@ class SSLiveAPI {
 	var $xml_current_tag = NULL;
 	var $last_depth_closed = 0;
 	var $xml_doc_type = '';
-	
-	// PHP 4
-	function SSLiveAPI($domain, $protocol='http') {
-		$this->__construct($domain, $protocol);
-	}
 	
 	function __construct($domain, $protocol='http') {
 		$this->domain = $domain;
@@ -496,7 +485,7 @@ class SSLiveAPI {
 	}
 
 	function encode($data) {
-		$hasher =& new Crypt_HMAC($this->auth['password'], "sha1");
+		$hasher = new Crypt_HMAC($this->auth['password'], "sha1");
 		$digest = $hasher->hash($data);
 		// hash_mac isn't installed on two systems I tried so we use PEAR library
 		// $digest = hash_mac("sha1", $data, $this->api_key, true);
