@@ -1,2 +1,4 @@
 HMAC.php
 .DS_Store
+*composer.lock
+*vendor
